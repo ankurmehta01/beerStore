@@ -20,14 +20,20 @@ function StoreList({ heading, dataArray }) {
   };
   return (
     <ul className={classes.listContainer}>
-      <li className={classes.heading}>{heading}</li>
+      <li className={classes.heading}>
+        <div className={classes.headingContainer}>{heading}</div>
+      </li>
       {array.map((item) => {
         return (
           <li className={classes.storeInfo} key={item.id}>
-            {item.address}{" "}
-            <button id={item.id} onClick={deletehandler}>
-              <RiDeleteBinLine />
-            </button>
+            <div className={classes.addressContainer}>
+              <p>{item.address}</p>
+            </div>
+            <div className={classes.buttonContainer}>
+              <button id={item.id} onClick={deletehandler}>
+                <RiDeleteBinLine />
+              </button>
+            </div>
           </li>
         );
       })}

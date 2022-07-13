@@ -9,6 +9,8 @@ function Input({
   value,
   searchValueChangeHandler,
 }) {
+  // console.log(register, "register from input");
+  // console.log({ ...register("hello2") });
   return (
     <div className={classes.inputContainer}>
       <label className={labelSize ? classes.large : null}>{label}</label>
