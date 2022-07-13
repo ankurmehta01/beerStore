@@ -1,0 +1,48 @@
+.row1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.row2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.row2 button {
+  margin-top: 25px;
+}
+.row2 div {
+  padding-bottom: 0%;
+}
+.selectContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 1rem;
+}
+.selectContainer select {
+  width: 260px;
+  height: 35px;
+  margin-top: 5px;
+}
+
+.row3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.row3 ul {
+  margin-left: 15px;
+}
+.row4 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.row4 button {
+  margin-left: 10px;
+}
+.black {
+  background-color: black;
+}

@@ -1,0 +1,28 @@
+.container {
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.heading {
+  font-weight: bolder;
+
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  border-bottom: 1px solid grey;
+}
+.heading h1 {
+}
+.heading a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

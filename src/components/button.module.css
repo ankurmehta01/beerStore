@@ -1,0 +1,25 @@
+.button {
+  background-color: #f4c430;
+  padding: 0.5rem 1rem;
+
+  border: none;
+  border-radius: 5px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.button2 {
+  background-color: black;
+  padding: 0.5rem 1rem;
+  color: white;
+
+  border: none;
+  border-radius: 5px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}

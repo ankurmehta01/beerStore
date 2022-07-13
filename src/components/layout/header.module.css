@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  background-color: black;
+  color: white;
+}
+.main {
+  width: 70%;
+  display: flex;
+  justify-content: flex-end;
+  height: 60px;
+}
+.list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.list li {
+  margin-left: 0.3rem;
+}
+.list select {
+  background-color: black;
+  color: white;
+  border: none;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo a {
+  text-decoration: none;
+  color: white;
+  font-weight: bolder;
+}
