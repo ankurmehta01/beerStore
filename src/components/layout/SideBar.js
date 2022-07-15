@@ -24,9 +24,9 @@ function SideBar() {
           <li>
             <FiUser />
             <Link
-              className={(navData) => {
-                return navData.isActive ? classes.active : " ";
-              }}
+              // className={(navData) => {
+              //   return navData.isActive ? classes.active : " ";
+              // }}
               to="/user-management"
             >
               User Management

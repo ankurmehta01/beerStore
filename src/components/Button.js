@@ -3,7 +3,10 @@ import classes from "./button.module.css";
 
 function Button(props) {
   return (
-    <button className={props.class ? classes.button2 : classes.button}>
+    <button
+      onClick={props.addUserHandler}
+      className={props.class ? classes.button2 : classes.button}
+    >
       {props.children}
     </button>
   );

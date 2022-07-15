@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import classes from "./storeList.module.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-function StoreList({ heading, dataArray }) {
+function StoreList({ heading, dataArray, resetStores }) {
   const [array, setArray] = useState(dataArray);
+  console.log(array, "from storelist");
   useEffect(() => {
     setArray(dataArray);
   }, [dataArray]);
@@ -17,6 +18,9 @@ function StoreList({ heading, dataArray }) {
     });
 
     setArray(dataArray);
+    console.log(dataArray, "dataarray");
+
+    resetStores(dataArray);
   };
   return (
     <ul className={classes.listContainer}>

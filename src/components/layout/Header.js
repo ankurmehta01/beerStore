@@ -4,12 +4,14 @@ import classes from "./header.module.css";
 import { IconContext } from "react-icons";
 import { Link } from "react-router-dom";
 
-function Header() {
+function Header(props) {
   return (
     <IconContext.Provider value={{ size: "25px" }}>
       <nav className={classes.container}>
         <div className={classes.logo}>
-          <Link to="#">BEER STORE</Link>
+          <Link to="/beer-store" onClick={props.showSidebar}>
+            BEER STORE
+          </Link>
         </div>
         <div className={classes.main}>
           <ul className={classes.list}>

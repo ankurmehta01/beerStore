@@ -2,8 +2,8 @@ let dummy_store = [
   {
     id: 1,
     address: "2002,198 Queen St.E.Brampton",
-    assignedStore: true,
-    baseStore: true,
+    assignedStore: false,
+    baseStore: false,
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ let dummy_store = [
   {
     id: 3,
     address: "2004,198 Queen St.E.NewYork",
-    assignedStore: true,
+    assignedStore: false,
     baseStore: false,
   },
   {

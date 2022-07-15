@@ -7,6 +7,7 @@ import { IconContext } from "react-icons";
 import StoreList from "./StoreList";
 import { getAllData, getAssignedStores, getBaseStores } from "./database/db";
 import { useForm } from "react-hook-form";
+import { IoVolumeHigh } from "react-icons/io5";
 
 function Form() {
   let allStore = getAllData();
@@ -16,11 +17,12 @@ function Form() {
   // console.log({ ...register() });
 
   const [enteredSearchValue, setEnteredSearchValue] = useState("");
+  const [selectedId, setSelectedId] = useState(0);
   const [selectedBaseStore, setSelectedBaseStore] = useState(baseStores);
-  const [selectedAssignedStore, setSelectedAssignedStore] =
-    useState(assignedStores);
+  const [selectedAssignedStore, setSelectedAssignedStore] = useState([]);
 
-  const [isBase, setIsBase] = useState(null);
+  const [isBase, setIsBase] = useState(true);
+  console.log(isBase, "isBase..........");
   // console.log(isBase, "isBase....");
   // console.log(selectedAssignedStore, "assigned................");
 
@@ -39,28 +41,87 @@ function Form() {
 
   const serachListClickHandler = (e) => {
     const id = parseInt(e.currentTarget.getAttribute("id"));
+    allStore.map((item) => {
+      if (item.id === id) {
+        setSelectedId(item.id);
+        setEnteredSearchValue(item.address);
+      }
+    });
+  };
+  const addUserHandler = (e) => {
+    e.preventDefault();
+    const id = selectedId;
+    console.log(id, "from addUseHandler");
     if (isBase === null) {
       alert("please select the store first");
+      return;
     } else if (isBase) {
-      const selectedStore = allStore.filter((item) => {
-        return item.id === id;
-      });
-      console.log(selectedStore);
-      setSelectedBaseStore(selectedStore);
+      if (id !== 0) {
+        const selectedStore = allStore.filter((item) => {
+          return item.id === id;
+        });
+        console.log(selectedStore);
+        setSelectedBaseStore(selectedStore);
+        let latestAssignedStore = selectedAssignedStore.filter((item) => {
+          return item.id !== id;
+        });
+        setSelectedAssignedStore(latestAssignedStore);
+      }
     } else {
-      let arrayWithoutSelectedValue = selectedAssignedStore.filter((item) => {
-        return item.id !== id;
-      });
-      let arrayWithSelectedValue = allStore.filter((item) => {
-        return item.id === id;
-      });
-      console.log(arrayWithoutSelectedValue, "arraySelected");
-      console.log(arrayWithSelectedValue, "arraySelected");
-      setSelectedAssignedStore([
-        ...arrayWithoutSelectedValue,
-        arrayWithSelectedValue[0],
-      ]);
+      if (id !== 0) {
+        // let arrayWithoutSelectedValue = selectedAssignedStore.filter((item) => {
+        //   return item.id !== id;
+        // });
+        // let arrayWithSelectedValue = allStore.filter((item) => {
+        //   return item.id === id;
+        // });
+        // console.log(arrayWithoutSelectedValue, "arraySelected");
+        // console.log(arrayWithSelectedValue, "arraySelected");
+        // setSelectedAssignedStore([
+        //   ...arrayWithoutSelectedValue,
+        //   arrayWithSelectedValue[0],
+        // ]);
+        const selectedByUser = allStore.filter((item) => {
+          return item.id === id;
+        });
+        const isSelectedItemPresentInBaseStore = selectedBaseStore.filter(
+          (item) => {
+            return item.id === id;
+          }
+        );
+        if (isSelectedItemPresentInBaseStore.length === 0) {
+          if (selectedAssignedStore.length === 0) {
+            setSelectedAssignedStore(selectedByUser);
+          } else {
+            const alreadyInAssignedStore = selectedAssignedStore.filter(
+              (item) => {
+                return item.id === id;
+              }
+            );
+
+            if (alreadyInAssignedStore.length === 0) {
+              setSelectedAssignedStore([
+                ...selectedAssignedStore,
+                selectedByUser[0],
+              ]);
+            }
+          }
+        }
+      }
     }
+    setEnteredSearchValue("");
+    setSelectedId(0);
+  };
+
+  const resetBaseStores = (array) => {
+    setSelectedBaseStore(array);
+  };
+  const resetAssignedStore = (array) => {
+    console.log(array, "from form.js...");
+    setSelectedAssignedStore(array);
+  };
+  const resetSelectedId = () => {
+    setSelectedId(0);
   };
   return (
     <IconContext.Provider value={{ size: "15px" }}>
@@ -108,7 +169,7 @@ function Form() {
             value={enteredSearchValue}
             searchValueChangeHandler={searchValueChangeHandler}
           ></Input>
-          <Button>
+          <Button addUserHandler={addUserHandler}>
             <AiOutlinePlus />
             Add User To Store
           </Button>
@@ -120,6 +181,7 @@ function Form() {
             id="base"
             name="store"
             value="base"
+            checked={isBase ? true : false}
             onChange={(e) => setIsBase(true)}
           />
           <label>Base Store</label>
@@ -129,6 +191,7 @@ function Form() {
             id="assigned"
             name="store"
             value="assigned"
+            checked={isBase ? false : true}
             onChange={(e) => setIsBase(false)}
           />
           <label>Assigned Store</label>
@@ -157,11 +220,13 @@ function Form() {
             heading="Base Store"
             dataArray={selectedBaseStore}
             isBase={isBase}
+            resetStores={resetBaseStores}
           />
           <StoreList
             heading="Other Assigned Store"
             dataArray={selectedAssignedStore}
             isBase={isBase}
+            resetStores={resetAssignedStore}
           />
         </div>
         <div className={classes.row4}>
