@@ -6,15 +6,53 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import StoreList from "./StoreList";
 import { getAllData, getAssignedStores, getBaseStores } from "./database/db";
-import { useForm } from "react-hook-form";
-import { IoVolumeHigh } from "react-icons/io5";
+import { useForm, useFormState, useWatch } from "react-hook-form";
+
+const Controller = ({ control, register, name, rules, render }) => {
+  const value = useWatch({
+    control,
+    name,
+  });
+  // const { errors } = useFormState({
+  //   control,
+  //   name,
+  // });
+  const props = register(name, rules);
+
+  return render({
+    value,
+    onChange: (e) =>
+      props.onChange({
+        target: {
+          name,
+          value: e.target.value,
+        },
+      }),
+    onBlur: props.onBlur,
+    name: props.name,
+  });
+};
 
 function Form() {
   let allStore = getAllData();
   let baseStores = getBaseStores();
-  let assignedStores = getAssignedStores();
-  let { register, handleSubmit } = useForm();
-  // console.log({ ...register() });
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      employeeId: "",
+      userName: "",
+      role: "",
+      email: "",
+    },
+  });
 
   const [enteredSearchValue, setEnteredSearchValue] = useState("");
   const [selectedId, setSelectedId] = useState(0);
@@ -23,15 +61,12 @@ function Form() {
 
   const [isBase, setIsBase] = useState(true);
   console.log(isBase, "isBase..........");
-  // console.log(isBase, "isBase....");
-  // console.log(selectedAssignedStore, "assigned................");
 
   let searchedStores = allStore.filter((item) => {
     return item.address
       .toLowerCase()
       .includes(enteredSearchValue.toLowerCase());
   });
-  // console.log(selectedBaseStore);
 
   const searchValueChangeHandler = (e) => {
     const enteredValue = e.target.value;
@@ -69,18 +104,6 @@ function Form() {
       }
     } else {
       if (id !== 0) {
-        // let arrayWithoutSelectedValue = selectedAssignedStore.filter((item) => {
-        //   return item.id !== id;
-        // });
-        // let arrayWithSelectedValue = allStore.filter((item) => {
-        //   return item.id === id;
-        // });
-        // console.log(arrayWithoutSelectedValue, "arraySelected");
-        // console.log(arrayWithSelectedValue, "arraySelected");
-        // setSelectedAssignedStore([
-        //   ...arrayWithoutSelectedValue,
-        //   arrayWithSelectedValue[0],
-        // ]);
         const selectedByUser = allStore.filter((item) => {
           return item.id === id;
         });
@@ -120,55 +143,159 @@ function Form() {
     console.log(array, "from form.js...");
     setSelectedAssignedStore(array);
   };
-  const resetSelectedId = () => {
-    setSelectedId(0);
-  };
+
+  function submitHandler(data) {
+    console.log(data, "data from form.js");
+  }
+
   return (
     <IconContext.Provider value={{ size: "15px" }}>
-      <form className={classes.container}>
+      <form
+        className={classes.container}
+        onSubmit={handleSubmit(submitHandler)}
+      >
         <div className={classes.row1}>
           <div className={classes.column1}>
-            <Input
-              type="text"
-              placeholder=" Jonathan"
-              label="Employee ID"
-              // register={register}
-            />
-            <Input
-              type="text"
-              placeholder=""
-              label="First Name"
-              // register={register}
-            />
-            <Input
-              type="text"
-              placeholder=""
-              label="Username"
-              // register={register}
-            />
+            <div className={classes.inputContainer}>
+              <Controller
+                {...{
+                  control,
+                  register,
+                  name: "employeeId",
+                  rules: {
+                    required: {
+                      value: true,
+                      message: "*required",
+                    },
+
+                    maxLength: { value: 3, message: "Limit exceeded" },
+                  },
+                  render: (props) => (
+                    <Input {...props} label="Employee Id" type="number" />
+                  ),
+                }}
+              />
+              {errors.employeeId && <span>{errors.employeeId.message}</span>}
+            </div>
+            <div className={classes.inputContainer}>
+              <Controller
+                {...{
+                  control,
+                  register,
+                  name: "firstName",
+                  rules: {
+                    required: {
+                      value: true,
+                      message: "*required",
+                    },
+                    pattern: {
+                      value: /^[a-zA-Z]+$/,
+                      message: "Only alphabet values are required.",
+                    },
+                  },
+                  render: (props) => (
+                    <Input {...props} label="First Name" type="text" />
+                  ),
+                }}
+              />
+              {errors.firstName && <span>{errors.firstName.message}</span>}
+            </div>
+            <div className={classes.inputContainer}>
+              <Controller
+                {...{
+                  control,
+                  register,
+                  name: "userName",
+                  rules: {
+                    required: {
+                      value: true,
+                      message: "*required",
+                    },
+                    pattern: {
+                      value: /^[a-zA-Z0-9]+$/,
+                      message: "Username format is not correct.",
+                    },
+                  },
+                  render: (props) => (
+                    <Input {...props} label="Username" type="text" />
+                  ),
+                }}
+              />
+              {errors.userName && <span>{errors.userName.message}</span>}
+            </div>
           </div>
           <div className={classes.column2}>
-            <div className={classes.selectContainer}>
-              <label>Role</label>
-              <select>
-                <option>Select Role</option>
-                <option value="role1">Role1</option>
-                <option value="role1">Role2</option>
-              </select>
+            {/* <div className={classes.selectContainer}> */}
+            <div className={classes.inputContainer}>
+              <div>
+                <label>Role</label>
+                <select {...register("role", { required: "*required" })}>
+                  <option value="">Select Role</option>
+                  <option value="role1">Role1</option>
+                  <option value="role1">Role2</option>
+                </select>
+              </div>
+              {errors.role && <span>{errors.role.message}</span>}
             </div>
-            <Input type="text" placeholder="" label="Last Name" />
-            <Input type="email" placeholder="" label="Email" />
+            {/* </div> */}
+            <div className={classes.inputContainer}>
+              <Controller
+                {...{
+                  control,
+                  register,
+                  name: "lastName",
+                  rules: {
+                    required: {
+                      value: true,
+                      message: "*required",
+                    },
+                    pattern: {
+                      value: /^[a-zA-Z]+$/,
+                      message: "Only alphabet values are required.",
+                    },
+                  },
+                  render: (props) => (
+                    <Input {...props} label="Last Name" type="text" />
+                  ),
+                }}
+              />
+              {errors.lastName && <span>{errors.lastName.message}</span>}
+            </div>
+
+            <div className={classes.inputContainer}>
+              <Controller
+                {...{
+                  control,
+                  register,
+                  name: "email",
+                  rules: {
+                    pattern: {
+                      value:
+                        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                      message: "Email is not in a right format.",
+                    },
+                  },
+                  render: (props) => (
+                    <Input {...props} label="Email" type="text" />
+                  ),
+                }}
+              />
+              {errors.email && <span>{errors.email.message}</span>}
+            </div>
           </div>
         </div>
+
         <div className={classes.row2}>
-          <Input
-            type="text"
-            placeholder=" Search store by code."
-            label="Assign a Store"
-            labelSize="large"
-            value={enteredSearchValue}
-            searchValueChangeHandler={searchValueChangeHandler}
-          ></Input>
+          <div className={classes.inputContainer}>
+            <input
+              type="text"
+              placeholder=" Search store by code."
+              // label="Assign a Store"
+              // labelSize="large"
+              value={enteredSearchValue}
+              onChange={searchValueChangeHandler}
+            ></input>
+          </div>
           <Button addUserHandler={addUserHandler}>
             <AiOutlinePlus />
             Add User To Store

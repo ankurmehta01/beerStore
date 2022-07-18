@@ -10,7 +10,7 @@ function Header(props) {
       <nav className={classes.container}>
         <div className={classes.logo}>
           <Link to="/beer-store" onClick={props.showSidebar}>
-            BEER STORE
+            <span>B</span>EER STORE
           </Link>
         </div>
         <div className={classes.main}>

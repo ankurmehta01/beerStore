@@ -4,7 +4,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 
 function StoreList({ heading, dataArray, resetStores }) {
   const [array, setArray] = useState(dataArray);
-  console.log(array, "from storelist");
+
   useEffect(() => {
     setArray(dataArray);
   }, [dataArray]);
@@ -12,14 +12,11 @@ function StoreList({ heading, dataArray, resetStores }) {
   const deletehandler = (event) => {
     event.preventDefault();
     let id = parseInt(event.currentTarget.getAttribute("id"));
-    console.log(id, typeof id);
     dataArray = array.filter((item) => {
       return item.id !== id;
     });
 
     setArray(dataArray);
-    console.log(dataArray, "dataarray");
-
     resetStores(dataArray);
   };
   return (

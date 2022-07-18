@@ -23,12 +23,16 @@
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  padding: 1rem;
 }
-.selectContainer select {
+.inputContainer div {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.inputContainer select {
   width: 260px;
   height: 35px;
-  margin-top: 5px;
 }
 
 .row3 {
@@ -82,4 +86,57 @@
 }
 .radioContainer {
   padding: 0.5rem;
+}
+.inputContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 1rem;
+}
+.inputContainer input {
+  margin: 0;
+}
+.inputContainer span {
+  color: rgb(184, 5, 5);
+}
+
+.row2 input {
+  width: 250px;
+  height: 30px;
+  margin-top: 5px;
+}
+@media screen and (max-width: 700px) {
+  .row1 {
+    flex-direction: column;
+    width: 100%;
+  }
+  .row2 {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .row3 {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .row4 {
+    justify-content: center;
+    width: 100%;
+  }
+  .container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .radioContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }

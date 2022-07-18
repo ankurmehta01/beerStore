@@ -4,34 +4,48 @@
   width: 20%;
   /* height: 92.4vh; */
   display: flex;
-  height: 100%;
+  margin-top: 40px;
 }
 .list {
   list-style: none;
   width: 90%;
+  padding-left: 10%;
 }
 .list li {
-  margin: 0.2rem;
-  padding: 0.5rem;
-
   display: flex;
   align-items: center;
-
+  justify-content: center;
+  width: 100%;
+  height: 70px;
   border-bottom: 1px solid grey;
 }
 .list li:hover {
-  color: yellow;
+  color: #f3b230;
 }
 .list a {
   color: white;
   text-decoration: none;
-
-  padding: 0.3rem;
+  width: 100%;
+  margin-left: 10px;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 .list a:hover {
-  color: yellow;
+  color: #f3b230;
 }
 .active {
-  color: yellow;
+  color: #f28e1c;
   font-weight: bolder;
+}
+
+@media screen and (max-width: 700px) {
+  .container {
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
 }

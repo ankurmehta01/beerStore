@@ -23,14 +23,14 @@ function SideBar() {
         <ul className={classes.list}>
           <li>
             <FiUser />
-            <Link
+            <NavLink
               // className={(navData) => {
               //   return navData.isActive ? classes.active : " ";
               // }}
               to="/user-management"
             >
               User Management
-            </Link>
+            </NavLink>
           </li>
           <li>
             <IoStorefrontOutline />

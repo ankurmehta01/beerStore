@@ -5,6 +5,9 @@
   width: 100%;
   background-color: black;
   color: white;
+  position: fixed;
+  top: 0%;
+  left: 0%;
 }
 .main {
   width: 70%;
@@ -31,8 +34,17 @@
   justify-content: center;
   align-items: center;
 }
+.logo span {
+  color: #f28e1c;
+}
 .logo a {
   text-decoration: none;
   color: white;
   font-weight: bolder;
+  font-size: larger;
+}
+@media screen and (max-width: 700px) {
+  .container {
+    justify-content: space-around;
+  }
 }

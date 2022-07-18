@@ -1,27 +1,29 @@
 import React from "react";
 import classes from "./input.module.css";
+import { useState, useEffect } from "react";
 
-function Input({
-  type,
-  placeholder,
-  label,
-  labelSize,
-  value,
-  searchValueChangeHandler,
-}) {
-  // console.log(register, "register from input");
-  // console.log({ ...register("hello2") });
+const Input = (props) => {
+  const [value, setValue] = useState(props.value || "");
+
+  // useEffect(() => {
+  //   setValue(props.value);
+  // }, [props.value]);
   return (
     <div className={classes.inputContainer}>
-      <label className={labelSize ? classes.large : null}>{label}</label>
+      <label className={props.labelSize ? classes.large : null}>
+        {props.label}
+      </label>
       <input
-        type={type}
-        placeholder={placeholder}
+        type={props.type}
+        name={props.name}
+        onChange={(e) => {
+          setValue(e.target.value);
+          props.onChange && props.onChange(e);
+        }}
         value={value}
-        onChange={searchValueChangeHandler}
       />
     </div>
   );
-}
+};
 
 export default Input;

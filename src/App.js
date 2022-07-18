@@ -10,13 +10,13 @@ function App() {
     isShow(!show);
   };
   return (
-    <div>
+    <>
       <Header showSidebar={showSidebar} />
       <div className={classes.main}>
         {show && <SideBar />}
         <MainSection />
       </div>
-    </div>
+    </>
   );
 }
 
